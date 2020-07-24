@@ -1,0 +1,21 @@
+<div class="jumbotron m-5 mt-2 p-0">
+    <h1 class="display-3 text-center mat-background-warn">Piedra, papel o tijera</h1>
+</div>
+<ng-container *ngIf="!this.socketService.nameSelected; else elseTemplate" class="col-md-12">
+    <app-login [socketService]="this.socketService"></app-login>
+</ng-container>
+<ng-template #elseTemplate>
+    <div class="row">
+        <div [class]="this.socketService.gameStarted ? 'col-md-6' : 'col-md-12' ">
+            <app-play [socketService]="this.socketService"></app-play>
+        </div>
+        <ng-container *ngIf="this.socketService.gameStarted">
+            <div class="col-md-6">
+                <app-tabla [socketService]="this.socketService"></app-tabla>
+            </div>
+        </ng-container>
+    </div>
+
+</ng-template>
+<script src="/socket.io/socket.io.js"></script>
+<script src="./index.js"></script>

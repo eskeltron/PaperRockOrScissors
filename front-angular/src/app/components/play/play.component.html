@@ -1,0 +1,57 @@
+<div class="ml-5 jumbotron" [class]="this.socketService.gameStarted ? '' : 'mr-5'">
+    <h4 class="display-5 text-center">Nombre elegido: <strong>{{ this.socketService.actualUser.name }}</strong></h4>
+    <hr>
+    <ng-container *ngIf="!this.socketService.requestToPlay && !this.socketService.gameStarted">
+        <h5><strong>Elige contra quien jugar</strong></h5>
+        <div class="row">
+            <p style="display:inline-block; margin-left:50px; margin-right:30px; margin-top:12px">Cantidad de jugadas</p>
+            <mat-slider thumbLabel tickInterval="1" min="1" max="10" style="width:25%" (valueChange)="this.socketService.setMaxScore(slider.value)" #slider></mat-slider>
+            <button mat-flat-button color="warn" style="margin-left:50px;" (click)="this.socketService.jugarContraBot()">Jugar contra un  bot</button>
+        </div>
+        <mat-form-field style="width:100%">
+            <mat-label>Selecciona un jugador</mat-label>
+            <mat-select name="jugador" #jugador>
+                <mat-option *ngFor="let jugador of this.socketService.listOfUsers$ | async" [value]="jugador">
+                    {{jugador.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div>
+            <button type="button" class="btn btn-outline-info btn-block p-2 m-3" (click)="this.socketService.selectAdversary(jugador.value)">Desafiar</button>
+        </div>
+
+    </ng-container>
+
+    <ng-container *ngIf="this.socketService.requestToPlay;">
+        <h5 class="text-center">Tenes una invitación para jugar de: <strong>{{ this.socketService.requesterToPlay.name }}</strong></h5>
+        <h6 class="text-center">La partida será al mejor de {{this.socketService.game.maxMoves}} movimientos.</h6>
+
+        <div class="row">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-outline-success btn-block" (click)="this.socketService.acceptGame()">Aceptar</button>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-outline-danger btn-block" (click)="this.socketService.declineGame()">Declinar</button>
+            </div>
+        </div>
+
+        <p class="mt-5 mb-2">Tenes 15 segundos para contestar o se cancela la petición para jugar.</p>
+        <mat-progress-bar class="example-margin" color="#3f51b5" [value]="this.socketService.timer/150">
+        </mat-progress-bar>
+    </ng-container>
+
+    <ng-container *ngIf="this.socketService.requestToPlaySender;">
+        <h3 class="display-5 text-center">Esperando la respuesta de <strong>{{ this.socketService.requesterToPlay.name }}...</strong></h3>
+
+        <p class="mt-5 mb-2">Tu adversario tiene 15 segundos para contestar o se cancela la petición para jugar.</p>
+        <mat-progress-bar class="example-margin" color="#3f51b5" [value]="this.socketService.timer/150">
+        </mat-progress-bar>
+
+        <button type="button" class="btn btn-outline-danger btn-block mt-5" (click)="this.socketService.declineGame()">Cancelar</button>
+
+    </ng-container>
+
+    <ng-container *ngIf="this.socketService.gameStarted">
+        <app-play-footer [socket]="this.socketService"></app-play-footer>
+    </ng-container>
+</div>

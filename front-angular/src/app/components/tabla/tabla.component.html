@@ -1,0 +1,22 @@
+<div class="jumbotron">
+    <h4 class="display-5 text-center">Estas jugando contra: <strong>{{ this.socketService.adversary.name }}</strong></h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nº</th>
+                <th scope="col">{{this.socketService.game.playerOne.user.name}}</th>
+                <th scope="col">{{this.socketService.game.playerTwo.user.name}}</th>
+                <th scope="col">Ganador</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let score of this.socketService.game.scores; let i=index">
+                <th> {{i+1}} </th>
+                <th>{{score.playerOneMove}}</th>
+                <th>{{score.playerTwoMove}}</th>
+                <th>{{score.winner}}</th>
+            </tr>
+        </tbody>
+    </table>
+    <h6 class="text-center">El primero en llegar a <strong>{{ this.socketService.game.maxMoves }}</strong> gana!</h6>
+</div>

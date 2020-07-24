@@ -1,0 +1,29 @@
+<div class="ml-5 mr-5 jumbotron">
+
+    <h3 class="display-4">Ingresa tu nombre para jugar:</h3>
+    <div class="mt-3 mb-3">
+        <mat-form-field style="display: block;">
+            <mat-label>Con este nombre te veran los demás jugadores</mat-label>
+            <input #nameInput matInput type="text" (keydown.esc)="nameInput.value = ''" (keydown.enter)="this.verifiyName(nameInput.value)" [matAutocomplete]="auto">
+            <mat-autocomplete #auto=""></mat-autocomplete>
+            <button mat-button *ngIf="nameInput.value.length > 0" matSuffix mat-icon-button aria-label="Clear" (click)="nameInput.value = ''">
+              <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary" style="width:100%" (click)="this.verifiyName(nameInput.value)">
+        Comenzar!
+    </button>
+
+    <ng-container *ngIf="incorrectName;">
+        <div class="alert alert-warning mt-5" role="alert">
+            El nombre ingresado debe tener mínimo de <strong>3</strong> letras.
+        </div>
+    </ng-container>
+    <ng-container *ngIf="showErrorMessage;">
+        <div class="alert alert-danger mt-5" role="danger">
+            El nombre <strong>{{ name }}</strong> ya esta en uso.
+        </div>
+    </ng-container>
+
+</div>

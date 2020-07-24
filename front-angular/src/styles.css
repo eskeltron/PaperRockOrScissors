@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    /* background-image: url("./assets/papyrus-dark.png"); */
+    background-image: url("./assets/wheat.png");
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+    color: #3f51b5;
+}
+
+.jumbotron {
+    opacity: 0.92;
+    border: 2px solid black;
+}
+
+mat-slider {
+    width: 300px;
+    color: #3f51b5
+}
